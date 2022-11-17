@@ -1,0 +1,48 @@
+
+
+version: "3.9"
+services:
+  ### Nombre que tendrá el contenedor
+  chanchito:
+  ## ruta
+    build:
+      ##Indica a este fichero de docker donde se encuentra la aplicación 
+      ##o el 'contexto' en el cual se trabaja '.' ruta actual
+      context: .
+      ### Se indica que construya la imagen a partir de 'Dockerfile.dev'
+      dockerfile: Dockerfile.dev
+    ports:
+    ## puerto SO: puerto Dock
+      - "3000:3000"
+      ## Nombre de contenedor que queremos mapear 
+    links:
+      - mongous
+    ## A continuación le indicamos que utilice volumenes 
+    volumes:
+      ## En este ejemplo se indica que la ruta actual es la que se monta en el volumen ('.')
+      ## Luego se le indica la ruta de destino dentro del contenedor (':/home/app')
+      - .:/home/app
+  mongous:
+    image: mongo
+    ports:
+      - "27017:27017"
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=PapiJofre
+      - MONGO_INITDB_ROOT_PASSWORD=password
+    ### Se agrega una propiedad para el manejo de volumenes
+    ### Acá le indicamos al contenedor 'mongous' cuales son los volumenes que 
+    ### este va a utilizar 
+    ### Solo se puede usar los volumnenes que se hayan definido abajo (mogo-data) 
+    volumes:
+      ##nombre_volumen:ruta que se va a encontrar dentro del contenedor donde va a ser 
+      ## montado el volumen ('/data/db') por defecto de mongo
+      - mongo-data:/data/db
+      # mysql -> /var/lib/mysql
+      # postgres -> /var/lib/postgresql/data
+
+### A continuación se difinen volumenes 
+### Con el objetivo de manejar persistencia de data 
+### Acá definimos todos los volumenes que será usados por nuestros contenedores 
+volumes:
+  mongo-data:
+

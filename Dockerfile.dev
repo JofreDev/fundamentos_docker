@@ -1,0 +1,15 @@
+### Modificamos el fichero con base al Dockerfile creado anteriormente
+
+FROM node:18
+## Ejecución en modo desarrollo
+RUN npm i -g nodemon
+
+## Indicamos la ruta en la que estamos trabajando
+WORKDIR /home/app
+
+RUN mkdir -p /home/app
+
+EXPOSE 3000
+
+CMD ["nodemon","index.js"]
+

@@ -17,4 +17,20 @@ services:
     environment:
       - MONGO_INITDB_ROOT_USERNAME=PapiJofre
       - MONGO_INITDB_ROOT_PASSWORD=password
+    ### Se agrega una propiedad para el manejo de volumenes
+    ### Acá le indicamos al contenedor 'mongous' cuales son los volumenes que 
+    ### este va a utilizar 
+    ### Solo se puede usar los volumnenes que se hayan definido abajo (mogo-data) 
+    volumes:
+      ##nombre_volumen:ruta que se va a encontrar dentro del contenedor donde va a ser 
+      ## montado el volumen ('/data/db') por defecto de mongo
+      - mongo-data:/data/db
+      # mysql -> /var/lib/mysql
+      # postgres -> /var/lib/postgresql/data
+
+### A continuación se difinen volumenes 
+### Con el objetivo de manejar persistencia de data 
+### Acá definimos todos los volumenes que será usados por nuestros contenedores 
+volumes:
+  mongo-data:
 
